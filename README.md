@@ -27,6 +27,19 @@ GitHub Actionsで30分ごとに自動実行されます。
 | `url` | 監視するページのURL |
 | `selector` | 監視する部分のCSSセレクタ。`null` ならページ全体 |
 
+### ASOBI TICKET の受付ページ
+
+ASOBI TICKET はJavaScriptで描画されるため、`"type": "asobiticket"` を指定すると、ページが内部で使っている公開APIから受付一覧（受付状態・在庫・期間）とお知らせを読みます。
+
+```json
+{ "name": "表示名", "type": "asobiticket", "url": "https://asobiticket2.asobistore.jp/booths/xxxx", "booth": "xxxx", "mention": "@everyone" }
+```
+
+- `booth` はURL末尾のID
+- 受付中かつ完売ではない受付が新しく現れたとき（完売からの復活・新しい受付の開始）は、`mention` を付けて強調通知します。メンションが不要なら `mention` を消してください
+
+### 注意
+
 アクセス数や日時など毎回変わる部分があると、変化がなくても通知されてしまいます。`selector` で見たい部分に絞るのがおすすめです（ブラウザで要素を右クリック →「検証」で調べられます）。
 
 ## メモ

@@ -2,7 +2,7 @@ name: Web page monitor
 
 on:
   schedule:
-    - cron: "*/30 * * * *"  # 30分ごと（UTC基準。GitHub側の混雑で数分〜遅れることがあります）
+    - cron: "*/5 * * * *"   # 5分ごと（GitHubの最短間隔。混雑時は数分〜十数分遅れることがあります）
   workflow_dispatch:        # Actions タブから手動実行もできる
 
 permissions:

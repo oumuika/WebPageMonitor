@@ -1,7 +1,9 @@
 [
   {
-    "name": "監視するページの名前",
-    "url": "https://example.com/",
-    "selector": null
+    "name": "シャニマス shiny, the first REFRAC7IONS \"Still blue\"",
+    "type": "asobiticket",
+    "url": "https://asobiticket2.asobistore.jp/booths/shinycolors-261219",
+    "booth": "shinycolors-261219",
+    "mention": "@everyone"
   }
 ]
