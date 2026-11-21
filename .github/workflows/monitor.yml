@@ -1,0 +1,38 @@
+name: Web page monitor
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"  # 30分ごと（UTC基準。GitHub側の混雑で数分〜遅れることがあります）
+  workflow_dispatch:        # Actions タブから手動実行もできる
+
+permissions:
+  contents: write           # 前回の内容(state/)をコミットするため
+
+concurrency:
+  group: page-monitor
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests beautifulsoup4
+
+      - name: Check pages
+        run: python monitor.py
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Save state
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || (git commit -m "Update page state" && git push)
